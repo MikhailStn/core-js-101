@@ -27,8 +27,18 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  let res = '';
+  if ((num % 3 === 0) && !(num % 5 === 0)) {
+    res = 'Fizz';
+  } else if (num % 5 === 0 && !(num % 3 === 0)) {
+    res = 'Buzz';
+  } else if ((num % 3 === 0) && (num % 5 === 0)) {
+    res = 'FizzBuzz';
+  } else {
+    res = num;
+  }
+  return res;
 }
 
 
@@ -43,8 +53,14 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  let res = '';
+  if (n === 1) {
+    res = 1;
+  } else {
+    res = n * getFactorial(n - 1);
+  }
+  return res;
 }
 
 
@@ -60,8 +76,14 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let res = 0;
+  if (n1 === n2) {
+    res = n1;
+  } else {
+    res = n1 + getSumBetweenNumbers(n1 + 1, n2);
+  }
+  return res;
 }
 
 
@@ -80,8 +102,8 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return (a + b + c) / 2 > Math.max(a, b, c);
 }
 
 
