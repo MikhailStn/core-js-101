@@ -310,8 +310,22 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let res = 0;
+  const arr = ccn.toString().split('').map((el) => Number(el));
+  for (let i = 0; i < arr.length; i += 1) {
+    if (i % 2 !== arr.length % 2) {
+      res += arr[i];
+    } else if (arr[i] > 4) {
+      res += 2 * arr[i] - 9;
+    } else {
+      res += 2 * arr[i];
+    }
+  }
+  if (res % 10 === 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -328,8 +342,21 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const arr = num.toString().split('').map((el) => Number(el));
+  let sum = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    sum += arr[i];
+  }
+  if (sum > 9) {
+    const newArr = sum.toString().split('').map((el) => Number(el));
+    let newSum = 0;
+    for (let i = 0; i < newArr.length; i += 1) {
+      newSum += newArr[i];
+    }
+    return newSum;
+  }
+  return sum;
 }
 
 
@@ -346,7 +373,7 @@ function getDigitalRoot(/* num */) {
  *   '' => true
  *   '[]'  => true
  *   '{}'  => true
- *   '()   => true
+ *   '()'   => true
  *   '[[]' => false
  *   ']['  => false
  *   '[[][][[]]]' => true
@@ -354,8 +381,18 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brackets = '[]{}()<>';
+  const stack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const bracketIndex = brackets.indexOf(str[i]);
+    if (bracketIndex % 2 === 0) {
+      stack.push(bracketIndex + 1);
+    } else if (stack.pop() !== bracketIndex) {
+      return false;
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -379,8 +416,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -396,8 +433,26 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  for (let i = 0; i < pathes.length; i += 1) {
+    if (pathes[i][0] !== '/') {
+      return '';
+    }
+  }
+  const arrays = pathes.map((el) => el.split('/'));
+  arrays.map((el) => el.splice(0, 1));
+  if (arrays[0][0] !== arrays[1][0]) {
+    return '/';
+  }
+  let path = '/';
+  for (let i = 0; i < arrays[0].length; i += 1) {
+    for (let j = 1; j < arrays.length; j += 1) {
+      if (arrays[0][i] === arrays[j][i]) {
+        path += `${arrays[0][i]}/`;
+      }
+    }
+  }
+  return path;
 }
 
 
@@ -419,8 +474,24 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const result = [];
+  if (m1[0].length === m2.length) {
+    let arr = [];
+    let res = 0;
+    for (let i = 0; i < m2[0].length; i += 1) {
+      for (let j = 0; j < m2[0].length; j += 1) {
+        for (let y = 0; y < m1[0].length; y += 1) {
+          res += m1[i][y] * m2[y][j];
+        }
+        arr.push(res);
+        res = 0;
+      }
+      result.push(arr);
+      arr = [];
+    }
+  }
+  return result;
 }
 
 
@@ -454,8 +525,44 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  if (position[0][0] === position[0][1] && position[0][0]
+    === position[0][2] && position[0][0]) {
+    return position[0][0].toString();
+  }
+  if (position[0][0] === position[1][1] && position[0][0]
+    === position[2][2] && position[0][0]) {
+    return position[0][0].toString();
+  }
+  if (position[0][0] === position[1][0] && position[0][0]
+    === position[2][0] && position[0][0]) {
+    return position[0][0].toString();
+  }
+  if (position[0][1] === position[1][1] && position[0][1]
+    === position[2][1] && position[0][1]) {
+    return position[0][1].toString();
+  }
+  if (position[0][2] === position[1][1] && position[0][2]
+    === position[0][1] && position[0][2]) {
+    return position[0][2].toString();
+  }
+  if (position[0][2] === position[1][2] && position[0][2]
+    === position[2][2] && position[0][2]) {
+    return position[0][2].toString();
+  }
+  if (position[0][2] === position[1][1] && position[0][2]
+    === position[2][0] && position[0][2]) {
+    return position[0][2].toString();
+  }
+  if (position[1][0] === position[1][1] && position[1][0]
+    === position[1][2] && position[1][0]) {
+    return position[1][0].toString();
+  }
+  if (position[2][0] === position[2][1] && position[2][0]
+    === position[2][2] && position[2][0]) {
+    return position[2][0].toString();
+  }
+  return undefined;
 }
 
 
